@@ -10,13 +10,15 @@
 
       <div v-else>
         <v-btn text to="/login">Login</v-btn>
-        <v-btn text to="/login">Sign up</v-btn>
-      </div>
-
-
+        <v-btn text to="/signup">Sign up</v-btn>
+      </div> 
     </v-app-bar>
-    <nuxt />
-    <v-footer :absolute="!fixed" app>
+    
+    <v-main>
+      <nuxt />
+    </v-main>
+
+    <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
