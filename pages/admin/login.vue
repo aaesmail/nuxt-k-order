@@ -2,16 +2,16 @@
   <v-container>
     <h1>Login</h1>
 
-    <UserAuthForm buttonText="Login" :submitForm="loginUser" />
+    <UserAuthForm buttonText="Login" :submitForm="loginAdmin" />
   </v-container>
 </template>
 
 <script>
 export default {
   methods: {
-    loginUser(loginInfo) {
+    loginAdmin(loginInfo) {
       this.$store
-        .dispatch('auth/login_user', {
+        .dispatch('auth/login_admin', {
           email: loginInfo.email,
           password: loginInfo.password,
         })
