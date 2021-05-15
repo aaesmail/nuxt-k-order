@@ -2,7 +2,7 @@
     <v-container>
         <h1>Login</h1>
 
-        <UserAuthForm buttonText="Sign Up" :submitForm="loginUser" hasName="true"/>
+        <UserAuthForm buttonText="Sign Up" :submitForm="signupUser" hasName="true"/>
     </v-container>
 
     

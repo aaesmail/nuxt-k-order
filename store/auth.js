@@ -10,7 +10,7 @@ export const state = () => ({
 
 export const mutations = {
   set_user(store, data) {
-    store.user = { ...data }
+    store.user = data
   },
   reset_user(store) {
     store.user = null
