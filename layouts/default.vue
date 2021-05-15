@@ -1,11 +1,11 @@
 <template>
   <v-app dark>
-    <AppBar />    
+    <AppBar />
     <v-main>
       <nuxt />
     </v-main>
 
-    <v-footer app>
+    <v-footer>
       <span>Copyright &copy; {{ new Date().getFullYear() }} K-Order</span>
     </v-footer>
   </v-app>
