@@ -8,6 +8,7 @@
       height="80"
     >
       <v-img
+        v-if="$vuetify.breakpoint.mdAndUp"
         :src="require('@/assets/logo.png')"
         class="ml-12"
         contain
