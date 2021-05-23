@@ -1,7 +1,5 @@
 <template>
-    <v-container>
-        <h1>Login</h1>
-
+  <v-container class="mt-12">
         <UserAuthForm buttonText="Sign Up" :submitForm="signupUser" hasName="true"/>
     </v-container>
 

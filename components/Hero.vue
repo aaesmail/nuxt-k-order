@@ -6,7 +6,7 @@
       class="white--text"
       gradient="to bottom, rgba(11, 28, 61, .9), rgba(0,0,0,.4)"
     >
-      <v-container class="fill-height px-4 py-8">
+      <v-container class="fill-height px-4 py-2">
         <v-responsive
           class="d-flex align-center mx-auto"
           height="100%"

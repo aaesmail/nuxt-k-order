@@ -1,8 +1,6 @@
 <template>
-  <v-container>
-    <h1>Login</h1>
-
-    <UserAuthForm buttonText="Login" :submitForm="loginUser" />
+  <v-container class="mt-12">
+    <UserAuthForm buttonText="Log in" :submitForm="loginUser" />
   </v-container>
 </template>
 

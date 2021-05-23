@@ -1,6 +1,12 @@
 <template>
-  <v-form v-model="valid">
-    <v-text-field v-model="userInfo.name" 
+  <v-row justify="center">
+    <v-col
+      cols="4"
+    >
+  <v-card v-model="valid">
+    <v-card-text>
+    <v-text-field v-model="userInfo.name"
+                  class="shrink" 
                   label="Name" 
                   :rules="[required('name')]"
                   v-if="hasName" />
@@ -17,9 +23,14 @@
                   counter=true
                   :rules="[required('password'), minLength('password', 8)]"
                   />
-
+    <v-layout class="my-3">
+      <v-spacer />
     <v-btn @click="submitForm(userInfo)" :disabled="!valid">{{ buttonText }}</v-btn>
-  </v-form>
+    </v-layout>
+    </v-card-text>
+  </v-card>
+  </v-col>
+  </v-row>
 </template>
 
 <script>
