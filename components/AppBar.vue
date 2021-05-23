@@ -19,9 +19,6 @@
       <div>
         <v-tabs optional background-color="transparent">
           <template v-if="$store.state.auth.user">
-            <v-card-subtitle v-if="$store.state.auth.admin">
-              admin logged: {{ $store.state.auth.admin.name }}
-            </v-card-subtitle>
             <v-tab
               :ripple="false"
               class="font-weight-bold"

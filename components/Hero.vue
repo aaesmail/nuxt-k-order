@@ -2,7 +2,7 @@
   <section id="hero">
     <v-img
       :min-height="minHeight"
-      :src="require('@/assets/hero.jpg')"
+      :src="require('@/assets/hero-bg.webp')"
       class="white--text"
       gradient="to bottom, rgba(11, 28, 61, .9), rgba(0,0,0,.4)"
     >
@@ -19,7 +19,7 @@
           <h1 :class="$vuetify.breakpoint.smAndDown
                 ? 'display-2'
                 : 'display-4'">
-          K-O YOUR HUNGER NOW!
+          <u><strong>K-O</strong></u> YOUR HUNGER NOW!
           </h1>
 
           <div
