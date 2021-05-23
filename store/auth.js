@@ -3,7 +3,7 @@ import { setAuthToken, resetAuthToken } from '~/utils/auth'
 import cookies from 'js-cookie'
 
 export const state = () => ({
-  user: null,
+  user: {name: 'Ali'},
   admin: null,
   admin_token: null,
 })
