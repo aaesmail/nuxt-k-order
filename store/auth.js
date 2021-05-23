@@ -1,11 +1,9 @@
 const api = require('~/api').default
 import { setAuthToken, resetAuthToken } from '~/utils/auth'
-import cookies from 'js-cookie'
 
 export const state = () => ({
   user: {name: 'Ali'},
   admin: null,
-  admin_token: null,
 })
 
 export const mutations = {
@@ -18,12 +16,8 @@ export const mutations = {
   set_admin(store, data) {
     store.admin = data
   },
-  set_admin_token(store, data) {
-    store.admin_token = data
-  },
   reset_admin(store) {
     store.admin = null
-    store.admin_token = null
   },
 }
 
@@ -42,19 +36,20 @@ export const actions = {
     const response = await api.auth.login(data)
     commit('set_user', response.data.user)
     setAuthToken(response.data.token)
-    cookies.set('user-access-token', response.data.token, {
-      expires: 7,
-    })
+    localStorage.setItem('user-token', response.data.token)
     return response
   },
   logout_user({ commit }) {
-    cookies.remove('user-access-token')
+    localStorage.removeItem('user-token')
+    resetAuthToken()
     commit('reset_user')
     return Promise.resolve()
   },
-  async fetch_admin({ commit, state }) {
+  async fetch_admin({ commit }) {
     try {
-      const response = await api.auth.admin_me(state.admin_token)
+      const adminToken = localStorage.getItem('admin-token')
+      if (!adminToken) throw 'not authenticated'
+      const response = await api.auth.admin_me(adminToken)
       commit('set_admin', response.data.user)
       return response
     } catch (error) {
@@ -62,17 +57,14 @@ export const actions = {
       return error
     }
   },
-  async login_admin({ commit, state }, data) {
+  async login_admin({ commit }, data) {
     const response = await api.auth.admin_login(data)
-    commit('set_admin_token', response.data.token)
     commit('set_admin', response.data.user)
-    cookies.set('admin-access-token', response.data.token, {
-      expires: 7,
-    })
+    localStorage.setItem('admin-token', response.data.token)
     return response
   },
   logout_admin({ commit }) {
-    cookies.remove('admin-access-token')
+    localStorage.removeItem('admin-token')
     commit('reset_admin')
     return Promise.resolve()
   },

@@ -21,7 +21,7 @@
                 : 'display-4'">
           <u><strong>K-O</strong></u> YOUR HUNGER NOW!
           </h1>
-
+          <p v-if="$store.state.auth.admin">{{$store.state.auth.admin.name}}</p>
           <div
             :class="
               $vuetify.breakpoint.smAndDown
