@@ -1,6 +1,5 @@
 import cookie from 'cookie'
 import { setAuthToken, resetAuthToken } from '~/utils/auth'
-import { promisify } from 'util'
 
 const checkUserToken = async (dispatch, context) => {
   const cookies = cookie.parse(context.req.headers.cookie || '')
