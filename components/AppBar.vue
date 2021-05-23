@@ -7,13 +7,14 @@
       app
       height="80"
     >
-      <v-img
-        v-if="$vuetify.breakpoint.mdAndUp"
-        :src="require('@/assets/logo.png')"
-        class="ml-12"
-        contain
-        max-width="140"
-      />
+      <v-tab v-if="$vuetify.breakpoint.mdAndUp" to="/" :ripple="false">
+        <v-img
+          :src="require('@/assets/logo.png')"
+          class="ml-12"
+          contain
+          max-width="140"
+        />
+      </v-tab>
       <v-spacer />
 
       <div>
@@ -24,7 +25,15 @@
               class="font-weight-bold"
               min-width="96"
               text
-              to="/"
+              to="/my-cart"
+              ><v-icon>mdi-cart</v-icon></v-tab
+            >
+            <v-tab
+              :ripple="false"
+              class="font-weight-bold"
+              min-width="96"
+              text
+              to="/me"
               >{{ $store.state.auth.user.name }}</v-tab
             >
             <v-tab
@@ -38,19 +47,18 @@
           </template>
 
           <template v-else>
-          <v-tab
-            v-for="(item, i) in other_items"
-            :key="i"
-            :to="item.route"
-            :ripple="false"
-            class="font-weight-bold"
-            min-width="96"
-            text
-          >
-            {{ item.title }}
-          </v-tab>
+            <v-tab
+              v-for="(item, i) in other_items"
+              :key="i"
+              :to="item.route"
+              :ripple="false"
+              class="font-weight-bold"
+              min-width="96"
+              text
+            >
+              {{ item.title }}
+            </v-tab>
           </template>
-
         </v-tabs>
       </div>
     </v-app-bar>
@@ -63,9 +71,9 @@ export default {
 
   data: () => ({
     other_items: [
-        {title: 'Homepage', route: '/'},
-        {title: 'Log in', route: '/login'},
-        {title: 'Sign up', route: '/signup'}
+      { title: 'Homepage', route: '/' },
+      { title: 'Log in', route: '/login' },
+      { title: 'Sign up', route: '/signup' },
     ],
   }),
 }
