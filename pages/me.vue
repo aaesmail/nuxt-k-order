@@ -6,11 +6,13 @@
       <h1 class="display-2">Hi, {{ name }}!</h1>
     </v-container>
     <v-container
+      v-if="address"
       class="d-flex flex-column align-center justify-center text-center"
     >
       <h1 class="display-1">Address: {{ address }}</h1>
     </v-container>
     <v-container
+      v-if="phone"
       class="d-flex flex-column align-center justify-center text-center"
     >
       <h1 class="display-1">Phone Number: {{ phone }}</h1>
@@ -19,7 +21,9 @@
       class="d-flex mt-15 flex-column flex-md-row align-center align-md-baseline justify-space-around text-center"
     >
       <v-btn class="mb-5 mb-md-0" to="/my-orders">My Orders</v-btn>
-      <v-btn @click="changeContact">Edit Contact Info</v-btn>
+      <v-btn v-if="address && phone" @click="changeContact"
+        >Edit Contact Info</v-btn
+      >
     </v-container>
     <ChangeContact v-if="changingContact" @done="changeDone" />
   </v-container>
