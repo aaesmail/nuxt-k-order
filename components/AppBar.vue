@@ -20,14 +20,23 @@
       <div>
         <v-tabs optional background-color="transparent">
           <template v-if="$store.state.auth.user">
-            <v-tab
-              :ripple="false"
-              class="font-weight-bold"
-              min-width="96"
-              text
-              to="/my-cart"
-              ><v-icon>mdi-cart</v-icon></v-tab
+            <v-badge
+              offset-x="30"
+              offset-y="10"
+              class="align-self-center"
+              color="blue"
+              :content="cartItemsNum"
+              :value="cartItemsNum"
             >
+              <v-tab
+                :ripple="false"
+                class="font-weight-bold"
+                min-width="96"
+                text
+                to="/my-cart"
+                ><v-icon>mdi-cart</v-icon></v-tab
+              >
+            </v-badge>
             <v-tab
               :ripple="false"
               class="font-weight-bold"
@@ -76,6 +85,12 @@ export default {
       { title: 'Sign up', route: '/signup' },
     ],
   }),
+
+  computed: {
+    cartItemsNum() {
+      return 2
+    },
+  },
 }
 </script>
 

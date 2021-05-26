@@ -10,6 +10,7 @@
       :menu="order.menuItems"
       :price="order.totalPrice"
     />
+    <v-pagination v-model="page" :length="pagesNum"></v-pagination>
   </v-container>
 </template>
 
@@ -17,6 +18,7 @@
 export default {
   data() {
     return {
+      page: 1,
       orders: [
         {
           date: '2021-05-23T16:22:13.760Z',
@@ -54,6 +56,12 @@ export default {
         },
       ],
     }
+  },
+
+  computed: {
+    pagesNum() {
+      return 8
+    },
   },
 }
 </script>
