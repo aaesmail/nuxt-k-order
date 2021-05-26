@@ -2,7 +2,7 @@ const api = require('~/api').default
 import { setAuthToken, resetAuthToken } from '~/utils/auth'
 
 export const state = () => ({
-  user: {name: 'Ali'},
+  user: null,
   admin: null,
 })
 

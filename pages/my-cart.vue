@@ -17,7 +17,7 @@ export default {
     },
 
     showCart() {
-      return true
+      return false
     },
   },
 }
