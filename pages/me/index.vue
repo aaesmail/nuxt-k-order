@@ -20,7 +20,8 @@
     <v-container
       class="d-flex mt-15 flex-column flex-md-row align-center align-md-baseline justify-space-around text-center"
     >
-      <v-btn class="mb-5 mb-md-0" to="/my-orders">My Orders</v-btn>
+      <v-btn class="mb-5 mb-md-0" to="/me/my-orders">My Orders</v-btn>
+      <v-btn class="mb-5 mb-md-0" to="/me/my-reviews">My Reviews</v-btn>
       <v-btn v-if="address && phone" @click="changeContact"
         >Edit Contact Info</v-btn
       >
