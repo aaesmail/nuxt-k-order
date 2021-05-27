@@ -88,7 +88,7 @@ export default {
 
   computed: {
     cartItemsNum() {
-      return 2
+      return this.$store.getters['cart/numberOfItems']
     },
   },
 }

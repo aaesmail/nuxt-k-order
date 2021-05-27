@@ -1,16 +1,20 @@
 <template>
   <v-container>
-    <OrderListItem
-      v-for="order in orders"
-      :key="order.id"
-      :id="order.id"
-      :date="order.date"
-      :delivered="order.delivered"
-      :restaurant="order.restaurant"
-      :menu="order.menuItems"
-      :price="order.totalPrice"
-    />
-    <v-pagination v-model="page" :length="pagesNum"></v-pagination>
+    <v-container v-if="showOrders">
+      <OrderListItem
+        v-for="order in orders"
+        :key="order.id"
+        :id="order.id"
+        :date="order.date"
+        :delivered="order.delivered"
+        :restaurant="order.restaurant"
+        :menu="order.menuItems"
+        :price="order.totalPrice"
+      />
+      <v-pagination v-model="page" :length="pagesNum"></v-pagination>
+    </v-container>
+
+    <h1 v-else class="text-center primary--text">No Orders Yet!</h1>
   </v-container>
 </template>
 
@@ -59,6 +63,10 @@ export default {
   },
 
   computed: {
+    showOrders() {
+      return this.orders.length > 0
+    },
+
     pagesNum() {
       return 8
     },

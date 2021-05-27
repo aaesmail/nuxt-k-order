@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto mb-5 text-center" max-width="50%">
+  <v-card class="mx-auto mb-5 text-center" max-width="100%">
     <v-card-text>
       <p
         class="title"
@@ -14,7 +14,7 @@
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-btn :to="'my-orders/' + id" text color="deep-purple accent-4">
+      <v-btn :to="'/me/my-orders/' + id" text color="deep-purple accent-4">
         Details
       </v-btn>
     </v-card-actions>
