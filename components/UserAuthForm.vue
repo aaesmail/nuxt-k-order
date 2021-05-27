@@ -3,7 +3,9 @@
     <v-col
       cols="4"
     >
-  <v-card v-model="valid">
+  
+  <v-card>
+  <v-form v-model="valid">
     <v-card-text>
     <v-text-field v-model="userInfo.name"
                   class="shrink" 
@@ -23,11 +25,15 @@
                   counter=true
                   :rules="[required('password'), minLength('password', 8)]"
                   />
+      <v-text-field  v-for="field in extraFields" :key="field.label" v-model="userInfo[field.label.toLowerCase()]"
+                  :label="field.label" 
+                  :rules="field.rules"/>
     <v-layout class="my-3">
       <v-spacer />
     <v-btn @click="submitForm(userInfo)" :disabled="!valid">{{ buttonText }}</v-btn>
     </v-layout>
     </v-card-text>
+  </v-form>
   </v-card>
   </v-col>
   </v-row>
@@ -37,7 +43,7 @@
   import validations from "@/utils/validations";
   export default {
     data() {
-      return {
+      return { 
         valid: false,
         showPassword: false,
         userInfo: {
@@ -47,7 +53,15 @@
         ...validations
       }
     },
-    props: ["submitForm", "buttonText", "hasName"]
+    props: {
+      submitForm: Function,
+      buttonText: String,
+      hasName: Boolean,
+      extraFields: {
+        type: Array,
+        default: () => []
+      }
+    }
   }
 </script>
 

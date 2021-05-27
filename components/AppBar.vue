@@ -58,7 +58,7 @@
               class="font-weight-bold"
               min-width="96"
               text
-              @click="$store.dispatch('auth/logout_user')"
+              @click="logout"
               >Logout</v-tab
             >
           </template>
@@ -93,7 +93,12 @@ export default {
       { title: 'Sign up', route: '/signup' },
     ],
   }),
-
+  methods: {
+    logout() {
+      this.$router.push('/')
+      this.$store.dispatch('auth/logout_user')
+    }
+  },
   computed: {
     cartItemsNum() {
       return this.$store.getters['cart/numberOfItems']
