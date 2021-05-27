@@ -17,9 +17,18 @@ let emailFormat = () => {
   return v => (v && regex.test(v)) || 'Must be a valid email'
 }
 
+let phoneFormat = () => {
+  let regex = /(01)[0-9]{9}/
+  return v =>
+    (v && regex.test(v)) ||
+    'Must be a valid Egyptian phone with 11 numeric digits, example: 01234567890'
+}
+
 export default {
   required,
+  phoneFormat,
   minLength,
   maxLength,
   emailFormat,
+  phoneFormat,
 }

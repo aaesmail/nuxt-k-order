@@ -39,6 +39,14 @@ export const actions = {
     localStorage.setItem('user-token', response.data.token)
     return response
   },
+  async signup_user({ commit }, data) {
+    const response = await api.auth.signup(data)
+    commit('set_user', response.data.user)
+    setAuthToken(response.data.token)
+    localStorage.setItem('user-token', response.data.token)
+    return response
+  },
+
   logout_user({ commit }) {
     localStorage.removeItem('user-token')
     resetAuthToken()
