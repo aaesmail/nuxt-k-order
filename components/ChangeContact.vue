@@ -1,5 +1,5 @@
 <template>
-  <v-container class="">
+  <v-container>
     <v-text-field
       v-model="address"
       :autofocus="true"
