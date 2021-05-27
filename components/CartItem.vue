@@ -7,32 +7,31 @@
       ${{ itemPrice }}
     </div>
     <div class="d-inline-flex headline">{{ description }}</div>
-    <NumberPicker :value="value" @input="amountChanged" />
+    <NumberPicker
+      :value="amount"
+      @increment="addItem"
+      @decrement="removeItem"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  props: ['name', 'description', 'price', 'value'],
-
-  emits: ['input'],
-
-  data() {
-    return {
-      itemAmount: this.value,
-    }
-  },
+  props: ['id', 'name', 'description', 'price', 'amount'],
 
   methods: {
-    amountChanged(amount) {
-      this.itemAmount = amount
-      this.$emit('value', amount)
+    addItem() {
+      this.$store.dispatch('cart/addItem', this.id)
+    },
+
+    removeItem() {
+      this.$store.dispatch('cart/removeItem', this.id)
     },
   },
 
   computed: {
     itemPrice() {
-      return this.price * this.itemAmount
+      return (this.price * this.amount).toFixed(2)
     },
   },
 }
