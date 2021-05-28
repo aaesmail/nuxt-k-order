@@ -23,7 +23,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Pending Requests</v-toolbar-title>
+          <v-toolbar-title>Active Restaurants</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialogConfirm" max-width="500px">
