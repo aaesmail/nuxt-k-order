@@ -12,7 +12,7 @@ export default {
   },
 
   async checkout({ commit, state }) {
-    const requestBody = Object.values(state.items).map(item => ({
+    const requestBody = state.items.map(item => ({
       menuItem: item.id,
       quantity: item.amount,
     }))

@@ -68,7 +68,7 @@ export default {
 
   computed: {
     items() {
-      return Object.values(this.$store.getters['cart/items'])
+      return this.$store.getters['cart/items']
     },
 
     totalPrice() {

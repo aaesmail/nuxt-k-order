@@ -12,6 +12,7 @@
         <v-rating
           v-model="rating"
           readonly
+          half-increments
           icon-label="custom icon label text {0} of {1}"
         ></v-rating>
       </div>
