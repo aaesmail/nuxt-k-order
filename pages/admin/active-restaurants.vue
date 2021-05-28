@@ -131,19 +131,13 @@ export default {
 
   methods: {
     initialize() {
-      admin.pending_restaurants(localStorage.getItem('admin-token')).then(res =>
+      admin.active_restaurants().then(res =>
           this.restaurants = res.data.restaurants
-      ).catch(err => alert('Failed getting pemding restaurants, please try again!'))
+      ).catch(err => alert('Failed getting restaurants, please try again!'))
     },
 
     showInfo(item) {
-      this.currentRestaurant = { name: item.name, contacts: [] }
-      for (let index = 0; index < item.addresses.length; index++) {
-        this.currentRestaurant.contacts.push({
-          phone: item.phones[index],
-          address: item.addresses[index],
-        })
-      }
+      this.currentRestaurant = item
       this.dialogInfo = true
     },
 

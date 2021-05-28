@@ -133,7 +133,7 @@ export default {
     initialize() {
       admin.pending_restaurants(localStorage.getItem('admin-token')).then(res =>
           this.restaurants = res.data.restaurants
-      ).catch(err => alert('Failed getting pemding restaurants, please try again!'))
+      ).catch(err => alert('Failed getting pending restaurants, please try again!'))
     },
 
     showInfo(item) {

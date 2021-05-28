@@ -7,4 +7,5 @@ export default {
     axios.patch('restaurants/confirm-status', list, {
       headers: { Authorization: token },
     }),
+  active_restaurants: () => axios.get('restaurants'),
 }
