@@ -15,7 +15,7 @@ export default {
           password: loginInfo.password,
         })
         .then(result => {
-          this.$router.push('/')
+          this.$router.push('/admin')
         })
         .catch(error => {
           this.loading = false
