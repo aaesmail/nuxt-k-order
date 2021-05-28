@@ -66,12 +66,12 @@
           <v-dialog v-model="dialogInfo" max-width="500px">
             <v-card>
               <v-card-title>
-                <span class="headline">{{ currentRestaurant.name }}</span>
+                <span class="headline">{{ currentRestaurant.name }} Branches</span>
               </v-card-title>
 
               <v-data-table
                 :headers="contactsHeaders"
-                :items="currentRestaurant.contacts"
+                :items="currentRestaurant.branches"
                 hide-default-header
                 hide-default-footer
                 class="elevation-1"
@@ -137,13 +137,7 @@ export default {
     },
 
     showInfo(item) {
-      this.currentRestaurant = { name: item.name, contacts: [] }
-      for (let index = 0; index < item.addresses.length; index++) {
-        this.currentRestaurant.contacts.push({
-          phone: item.phones[index],
-          address: item.addresses[index],
-        })
-      }
+      this.currentRestaurant = item
       this.dialogInfo = true
     },
 
@@ -157,7 +151,10 @@ export default {
 
     confirm() {
       this.dialogConfirm = false
-    //   todo
+      const list = this.selected.map(r => ({id: r.id, confirm_status: true}))
+      admin.set_restaurants_confirm_status(localStorage.getItem('admin-token'), list).then(res =>
+          this.initialize()
+      ).catch(err => alert('Failed, please try again!'))
     },
   },
 }
