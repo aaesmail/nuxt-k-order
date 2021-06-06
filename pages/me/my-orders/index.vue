@@ -19,10 +19,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       page: 1,
+      pagesNum: 1,
       orders: [
         {
           date: '2021-05-23T16:22:13.760Z',
@@ -62,14 +65,37 @@ export default {
     }
   },
 
+  watch: {
+    page: function(newPage) {
+      this.getOrders(newPage)
+    },
+  },
+
   computed: {
     showOrders() {
       return this.orders.length > 0
     },
+  },
 
-    pagesNum() {
-      return 8
+  methods: {
+    async getOrders(page) {
+      const response = await axios.get(`users/me/orders?page=${page}&limit=10`)
+
+      this.pagesNum = Math.ceil(response.data.totalSize / 10)
+
+      this.orders = response.data.orders.map(order => ({
+        date: order.date,
+        delivered: order.delivered,
+        restaurant: order.restaurant,
+        menuItems: order.menuItems,
+        totalPrice: order.totalPrice,
+        id: order.id,
+      }))
     },
+  },
+
+  created() {
+    this.getOrders(this.page)
   },
 }
 </script>

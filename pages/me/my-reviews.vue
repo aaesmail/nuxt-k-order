@@ -17,24 +17,14 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       page: 1,
-      reviews: [
-        {
-          id: '60a95b77ad298392c09bb116',
-          restaurant: '609ffe1de1136dc606c44d83',
-          rate: 5,
-          details: 'Your meals are great',
-        },
-        {
-          id: '60a95b77ad29839Ac09bb116',
-          restaurant: '609ffe1de1136dc606c44d83',
-          rate: 3,
-          details: 'Your meals are great',
-        },
-      ],
+      pagesNum: 1,
+      reviews: [],
     }
   },
 
@@ -42,10 +32,31 @@ export default {
     showReviews() {
       return this.reviews.length > 0
     },
+  },
 
-    pagesNum() {
-      return 8
+  watch: {
+    page: function(newPage) {
+      this.getReviews(newPage)
     },
+  },
+
+  methods: {
+    async getReviews(page) {
+      const response = await axios.get(`users/me/reviews?page=${page}&limit=10`)
+
+      this.pagesNum = Math.ceil(response.data.totalSize / 10)
+
+      this.reviews = response.data.reviews.map(review => ({
+        id: review._id,
+        restaurant: review.restaurant,
+        rate: review.rate,
+        details: review.details,
+      }))
+    },
+  },
+
+  mounted() {
+    this.getReviews(this.page)
   },
 }
 </script>

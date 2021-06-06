@@ -15,30 +15,39 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       page: 1,
+      pagesNum: 1,
 
-      restaurants: [
-        {
-          id: '609f16ee5248a8788cadc171',
-          name: 'KFC-',
-          rating: 3,
-        },
-        {
-          id: '609ffe1de1136dc606c44d83',
-          name: 'KFC',
-          rating: 4.5,
-        },
-      ],
+      restaurants: [],
     }
   },
 
-  computed: {
-    pagesNum() {
-      return 4
+  watch: {
+    page: function(newPage) {
+      this.getRestaurants(newPage)
     },
+  },
+
+  methods: {
+    async getRestaurants(page) {
+      const response = await axios.get(`restaurants?page=${page}&limit=10`)
+      const totalRestaurants = response.data.totalSize
+      this.pagesNum = Math.ceil(totalRestaurants / 10)
+      this.restaurants = response.data.restaurants.map(restaurant => ({
+        id: restaurant.id,
+        name: restaurant.name,
+        rating: restaurant.rating,
+      }))
+    },
+  },
+
+  mounted() {
+    this.getRestaurants(this.page)
   },
 }
 </script>

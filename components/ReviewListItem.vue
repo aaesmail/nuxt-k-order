@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   props: ['restaurant', 'rate', 'details'],
 
@@ -27,9 +29,16 @@ export default {
     }
   },
 
-  created() {
-    // fetch restaurant name here
-    this.restaurantName = 'Cook Door'
+  methods: {
+    async getRestaurant() {
+      const response = await axios.get(`restaurants/${this.restaurant}`)
+
+      this.restaurantName = response.data.restaurant.name
+    },
+  },
+
+  mounted() {
+    this.getRestaurant()
   },
 }
 </script>

@@ -22,11 +22,7 @@
     >
       <v-btn class="mb-5 mb-md-0" to="/me/my-orders">My Orders</v-btn>
       <v-btn class="mb-5 mb-md-0" to="/me/my-reviews">My Reviews</v-btn>
-      <v-btn v-if="address && phone" @click="changeContact"
-        >Edit Contact Info</v-btn
-      >
     </v-container>
-    <ChangeContact v-if="changingContact" @done="changeDone" />
   </v-container>
 </template>
 
@@ -34,20 +30,17 @@
 export default {
   data() {
     return {
-      changingContact: false,
-      name: 'Ali',
-      address: '12, street 12, mokkattam, cairo, egypt',
-      phone: '01231231232131',
+      name: '',
+      address: '',
+      phone: '',
     }
   },
 
-  methods: {
-    changeContact() {
-      this.changingContact = true
-    },
-    changeDone() {
-      this.changingContact = false
-    },
+  mounted() {
+    const user = this.$store.state.auth.user
+    this.name = user.name
+    this.address = user.address
+    this.phone = user.phone
   },
 }
 </script>

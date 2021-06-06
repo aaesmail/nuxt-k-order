@@ -9,19 +9,16 @@
       </p>
       <div class="subtitle-1 font-weight-bold">{{ restaurantName }}</div>
       <div class="mt-5 d-flex flex-column flex-md-row justify-space-around">
-        <p class="d-md-inline mt-4 mt-md-0">Items: {{ menu.length }}</p>
+        <p class="d-md-inline mt-4 mt-md-0">Items: {{ itemsLength }}</p>
         <div class=" d-md-inlineprimary--text">$ {{ price.toFixed(2) }}</div>
       </div>
     </v-card-text>
-    <v-card-actions>
-      <v-btn :to="'/me/my-orders/' + id" text color="deep-purple accent-4">
-        Details
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   props: ['id', 'date', 'delivered', 'restaurant', 'menu', 'price'],
 
@@ -31,9 +28,22 @@ export default {
     }
   },
 
-  created() {
-    // fetch restaurant name here
-    this.restaurantName = 'Cook Door'
+  methods: {
+    async getRestaurant() {
+      const response = await axios.get(`restaurants/${this.restaurant}`)
+
+      this.restaurantName = response.data.restaurant.name
+    },
+  },
+
+  computed: {
+    itemsLength() {
+      return this.menu.reduce((total, item) => total + item.quantity, 0)
+    },
+  },
+
+  mounted() {
+    this.getRestaurant()
   },
 }
 </script>

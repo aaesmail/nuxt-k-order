@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -45,7 +47,7 @@ export default {
         details: this.details,
       }
 
-      // submit request here
+      axios.post('users/me/reviews', requestBody)
 
       this.$router.push('/restaurants/' + this.$route.params.id)
     },
