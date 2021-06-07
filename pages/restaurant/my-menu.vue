@@ -51,12 +51,8 @@
                             x-small
                             fab
                             color="red"
-                            @click="
-                              selectedItem.ingredients_count =
-                                selectedItem.ingredients_count > 0
-                                  ? selectedItem.ingredients_count - 1
-                                  : selectedItem.ingredients_count
-                            "
+                            :disabled="selectedItem.ingredients_count < 1"
+                            @click="selectedItem.ingredients_count -= 1"
                           >
                             <v-icon>mdi-minus</v-icon>
                           </v-btn>
