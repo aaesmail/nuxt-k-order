@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="4">
+    <v-col cols="12" md="4" sm="6">
       <v-card>
         <v-form v-model="valid">
           <v-card-text>
@@ -34,18 +34,79 @@
               :label="field.label"
               :rules="field.rules"
             />
+
+            <section v-if="branchesInput">
+              <!-- Adding Branches -->
+              <v-col cols="12" sm="6" md="6">
+                <v-btn
+                  class="ma-2"
+                  outlined
+                  x-small
+                  fab
+                  color="red"
+                  :disabled="branchesCount < 1"
+                  @click="branchesCount -= 1"
+                >
+                  <v-icon>mdi-minus</v-icon>
+                </v-btn>
+                {{ branchesCount }} Branches
+                <v-btn
+                  class="ma-2"
+                  outlined
+                  x-small
+                  fab
+                  color="green"
+                  @click="branchesCount += 1"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-col>
+
+              <v-row v-for="(i, idx) in userInfo.branches" :key="idx">
+                <v-col cols="12" sm="7" md="7">
+                  <v-text-field
+                    :label="`Branch ${idx + 1} Address`"
+                    v-model="userInfo.branches[idx].address"
+                    :rules="[required(`branch ${idx + 1} address`)]"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="5" md="5">
+                  <v-text-field
+                    :label="`Branch ${idx + 1} Phone`"
+                    v-model="userInfo.branches[idx].phone"
+                    :rules="[
+                      required(`branch ${idx + 1} phone`),
+                      phoneFormat(),
+                    ]"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </section>
+            <!--  -->
             <v-layout class="my-3">
               <v-spacer />
               <v-btn @click="submitForm(userInfo)" :disabled="!valid">{{
                 buttonText
               }}</v-btn>
             </v-layout>
-            <v-card-title v-if="message != ''" class="indigo lighten-2">{{
-              message
-            }}</v-card-title>
+
+            <!-- <v-card-title v-if="message != ''" class="indigo lighten-2">{{
+              
+            }}</v-card-title> -->
           </v-card-text>
         </v-form>
       </v-card>
+      <v-snackbar
+        :timeout="-1"
+        :value="true"
+        absolute
+        top
+        color="deep-purple accent-4"
+        elevation="24"
+        v-if="message != ''"
+      >
+        {{ message }}
+      </v-snackbar>
     </v-col>
   </v-row>
 </template>
@@ -61,6 +122,7 @@ export default {
         email: '',
         password: '',
       },
+      branchesCount: 0,
       ...validations,
     }
   },
@@ -75,6 +137,21 @@ export default {
     message: {
       type: String,
       default: '',
+    },
+    branchesInput: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  watch: {
+    branchesCount(newValue, oldValue) {
+      if (newValue < 0) return
+      const difference = newValue - oldValue
+      if (!this.userInfo.branches) this.userInfo.branches = []
+      if (difference > 0)
+        while (this.userInfo.branches.length < newValue)
+          this.userInfo.branches.push({})
+      else this.userInfo.branches = this.userInfo.branches.slice(0, newValue)
     },
   },
 }
