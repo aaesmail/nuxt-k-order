@@ -98,7 +98,7 @@ export const actions = {
   },
   async login_restaurant({ commit }, data) {
     const response = await api.auth.restaurant_login(data)
-    commit('set_restaurant', response.data.user)
+    commit('set_restaurant', response.data.restaurant)
     setAuthToken(response.data.token)
     localStorage.setItem('restaurant-token', response.data.token)
     return response

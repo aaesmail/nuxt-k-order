@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-12">
     <UserAuthForm
       v-show="!next"
       buttonText="Next"

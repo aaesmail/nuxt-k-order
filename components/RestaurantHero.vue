@@ -2,7 +2,7 @@
   <section id="hero">
     <v-img
       :min-height="minHeight"
-      :src="require('@/assets/hero-admin.jpg')"
+      :src="require('@/assets/hero-restaurant.jpg')"
       class="white--text"
       gradient="to bottom, rgba(11, 28, 61, .9), rgba(0,0,0,.4)"
     >
@@ -19,7 +19,7 @@
           <h1
             :class="$vuetify.breakpoint.smAndDown ? 'display-2' : 'display-4'"
           >
-            <u><strong>K-Admin!</strong></u>
+            <u><strong>K-Restaurant!</strong></u>
           </h1>
           <div
             :class="
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: 'SectionAdminHero',
+  name: 'SectionRestaurantHero',
 
   provide: {
     theme: { isDark: true },

@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-12">
     <UserAuthForm
       buttonText="Login"
       :submitForm="loginRestaurant"
