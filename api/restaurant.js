@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 export default {
-  get_menu_items: id => axios.get(`restaurants/${id}/menu-items`),
+  get_menu_items: token =>
+    axios.get('restaurants/me/menu-items', {
+      headers: { Authorization: token },
+    }),
   add_menu_item: (token, item) =>
     axios.post('restaurants/me/menu-items', item, {
       headers: { Authorization: token },

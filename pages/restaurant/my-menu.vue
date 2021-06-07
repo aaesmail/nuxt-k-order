@@ -37,73 +37,110 @@
                 </v-tooltip>
               </template>
               <v-card>
-                <v-card-title>
-                  <span class="text-h5">{{ selectedItem.title }}</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
+                <v-form v-model="valid">
+                  <v-card-title>
+                    <span class="text-h5">{{ selectedItem.title }}</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <!-- <v-col cols="12" sm="6" md="4"> -->
+                        <!-- <v-text-field
                           type="number"
                           min="0"
                           v-model="selectedItem.ingredients_count"
                           label="Ingredients count"
                           required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-for="(i, idx) in selectedItem.ingredients"
-                          :key="idx"
-                          :label="`ingredient ${idx + 1}`"
-                          v-model="selectedItem.ingredients[idx]"
-                          required
-                        ></v-text-field>
-                      </v-col>
+                        ></v-text-field> -->
+                        <v-col cols="12" sm="6" md="6">
+                          <v-btn
+                            class="ma-2"
+                            outlined
+                            x-small
+                            fab
+                            color="red"
+                            @click="
+                              selectedItem.ingredients_count =
+                                selectedItem.ingredients_count > 0
+                                  ? selectedItem.ingredients_count - 1
+                                  : selectedItem.ingredients_count
+                            "
+                          >
+                            <v-icon>mdi-minus</v-icon>
+                          </v-btn>
+                          {{ selectedItem.ingredients_count }} ingredients
+                          <v-btn
+                            class="ma-2"
+                            outlined
+                            x-small
+                            fab
+                            color="green"
+                            @click="selectedItem.ingredients_count += 1"
+                          >
+                            <v-icon>mdi-plus</v-icon>
+                          </v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-for="(i, idx) in selectedItem.ingredients"
+                            :key="idx"
+                            :label="`ingredient ${idx + 1}`"
+                            v-model="selectedItem.ingredients[idx]"
+                            :rules="[required(`ingredient ${idx + 1}`)]"
+                          ></v-text-field>
+                        </v-col>
 
-                      <v-col cols="12">
-                        <v-text-field
-                          label="Title"
-                          v-model="selectedItem.name"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="selectedItem.description"
-                          label="Description"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          type="number"
-                          min="0"
-                          v-model="selectedItem.price"
-                          label="Price"
-                          required
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6">
-                        <v-checkbox
-                          v-model="selectedItem.availableForSale"
-                          label="Available"
-                        ></v-checkbox>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <small>*indicates required field</small>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="resetSelectedItem">
-                    Cancel
-                  </v-btn>
-                  <v-btn color="blue darken-1" text @click="AddSelectedItem">
-                    Save
-                  </v-btn>
-                </v-card-actions>
+                        <v-col cols="12">
+                          <v-text-field
+                            label="Title"
+                            v-model="selectedItem.name"
+                            :rules="[required('title')]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                          <v-text-field
+                            v-model="selectedItem.description"
+                            label="Description"
+                            :rules="[required('description')]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            type="number"
+                            min="0"
+                            v-model="selectedItem.price"
+                            label="Price"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                          <v-checkbox
+                            v-model="selectedItem.availableForSale"
+                            label="Available"
+                          ></v-checkbox>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                    <small>*indicates required field</small>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="resetSelectedItem"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      :disabled="!valid"
+                      text
+                      @click="AddSelectedItem"
+                    >
+                      Save
+                    </v-btn>
+                  </v-card-actions>
+                </v-form>
               </v-card>
             </v-dialog>
           </v-row>
@@ -286,11 +323,14 @@
 
 <script>
 import restaurant from '~/api/restaurant'
+import validations from '@/utils/validations'
 
 export default {
   layout: 'restaurant',
   data() {
     return {
+      ...validations,
+      valid: false,
       selectedItem: {
         ingredients: [],
         ingredients_count: 1,
@@ -408,11 +448,15 @@ export default {
       this.itemsPerPage = number
     },
     async initialize() {
-      if (!this.$store.state.auth.restaurant)
-        await this.$store.dispatch('auth/fetch_restaurant')
-      const id = this.$store.state.auth.restaurant.id
+      // if (!this.$store.state.auth.restaurant)
+      //   await this.$store.dispatch('auth/fetch_restaurant')
+      // const id = this.$store.state.auth.restaurant.id
       try {
-        this.items = (await restaurant.get_menu_items(id)).data.menu_items
+        this.items = (
+          await restaurant.get_menu_items(
+            localStorage.getItem('restaurant-token')
+          )
+        ).data.menu_items
         this.items.forEach(i => {
           i.ingredients = i.ingredients.join(', ')
           i.available = i.availableForSale ? '✅' : '❌'
