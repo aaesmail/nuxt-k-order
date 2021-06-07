@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   props: ['id'],
 
@@ -24,47 +26,39 @@ export default {
     return {
       page: 1,
 
-      items: [
-        {
-          id: '60a00d8f687756dd400b69ee',
-          name: 'Chicken Spicy',
-          ingredients: ['chicken', 'sauce'],
-          image: 'http://someimageurl',
-          description: 'Tasty Chicken with sauce',
-          price: 33.7,
-        },
-        {
-          id: '60a00df1687756dd401b69ef',
-          ingredients: ['chicken', 'sauce'],
-          name: 'Chicken Spicy',
-          image: 'http://someimageurl',
-          description: 'Tasty Chicken with sauce',
-          price: 76.2,
-        },
-        {
-          id: '60E017ee8c05c7f0b547c6a9',
-          ingredients: ['chicken', 'sauce'],
-          name: 'Chicken',
-          image: 'http://someimageurl',
-          description: 'Tasty Chicken',
-          price: 100,
-        },
-        {
-          id: '60a019138c05cKf0b547c6aa',
-          ingredients: ['chicken', 'sauce'],
-          name: 'Chicken Spicy',
-          image: 'http://someimageurl',
-          description: 'Tasty Chicken with sauce',
-          price: 55,
-        },
-      ],
+      pagesNum: 1,
+
+      items: [],
     }
   },
 
-  computed: {
-    pagesNum() {
-      return 5
+  watch: {
+    page: function(newPage) {
+      this.getMenuItems(newPage)
     },
+  },
+
+  methods: {
+    async getMenuItems(page) {
+      const response = await axios.get(
+        `restaurants/${this.id}/menu-items?page=${page}&limit=10`
+      )
+
+      this.pagesNum = Math.ceil(response.data.totalSize / 10)
+
+      this.items = response.data.menu_items.map(item => ({
+        id: item._id,
+        name: item.name,
+        ingredients: item.ingredients,
+        image: item.image,
+        description: item.description,
+        price: item.price,
+      }))
+    },
+  },
+
+  mounted() {
+    this.getMenuItems(this.page)
   },
 }
 </script>

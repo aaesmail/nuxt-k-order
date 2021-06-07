@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   addItem({ commit }, itemId) {
     commit('addItem', itemId)
@@ -17,8 +19,7 @@ export default {
       quantity: item.amount,
     }))
 
-    // make checkout request here
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await axios.post('users/me/orders', requestBody)
 
     commit('clearCart')
   },

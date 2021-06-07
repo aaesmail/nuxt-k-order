@@ -48,20 +48,35 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
-      id: '609ffe1de1136dc606c44d83',
-      name: 'KFC',
-      rating: 2.5,
-      email: 'kfc@gmail.com',
-      phones: ['01112233444', '01112233555', '01112233666'],
-      addresses: [
-        '12 st.9 - Mokattam - Cairo',
-        'Nasr city - Cairo - dandy mall',
-        '4 Al hosary st. - El sheikh zayed',
-      ],
+      id: this.$route.params.id,
+      name: '',
+      rating: 0,
+      email: '',
+      phones: [],
+      addresses: [],
     }
+  },
+
+  methods: {
+    async fetchRestaurant() {
+      const response = await axios.get(`restaurants/${this.$route.params.id}`)
+      const restaurant = response.data.restaurant
+
+      this.name = restaurant.name
+      this.rating = restaurant.rating
+      this.email = restaurant.email
+      this.phones = restaurant.branches.map(branch => branch.phone)
+      this.addresses = restaurant.branches.map(branch => branch.address)
+    },
+  },
+
+  mounted() {
+    this.fetchRestaurant()
   },
 }
 </script>
