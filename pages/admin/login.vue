@@ -1,6 +1,5 @@
 <template>
   <v-container>
-    <h1>Login</h1>
     <UserAuthForm
       buttonText="Login"
       :submitForm="loginAdmin"
@@ -11,6 +10,7 @@
 
 <script>
 export default {
+  layout: 'admin',
   data() {
     return {
       message: '',

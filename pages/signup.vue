@@ -26,7 +26,7 @@ export default {
           this.loading = false
           if (error.response && error.response.data) {
             if (error.response.data.error.code == 11000)
-              this.message = 'Already Registered'
+              this.message = 'Already Registered, please login.'
             else {
               this.message = error.response.data.message.split(':')
               this.message = this.message[this.message.length - 1]

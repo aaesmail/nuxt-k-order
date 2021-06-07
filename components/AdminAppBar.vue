@@ -7,13 +7,15 @@
       app
       height="80"
     >
-      <v-tab v-if="$vuetify.breakpoint.mdAndUp" to="/" :ripple="false">
-        <v-img
-          :src="require('@/assets/logo.png')"
-          class="ml-12"
-          contain
-          max-width="140"
-        />
+      <v-tab v-if="$vuetify.breakpoint.mdAndUp" :ripple="false">
+        <router-link to="/">
+          <v-img
+            :src="require('@/assets/logo.png')"
+            class="ml-12"
+            contain
+            max-width="140"
+          />
+        </router-link>
       </v-tab>
       <v-spacer />
 
@@ -21,12 +23,26 @@
         <v-tabs optional background-color="transparent">
           <template v-if="$store.state.auth.admin">
             <v-tab
+              to="/admin"
+              :ripple="false"
+              class="white--text"
+              min-width="96"
+              text
+            >
+              <span class="grey darken-1"> K-Admin </span>
+              &nbsp;{{ $store.state.auth.admin.name }}
+            </v-tab>
+            <v-tab
+              v-for="(item, i) in loggedin_items"
+              :key="i"
+              :to="item.route"
               :ripple="false"
               class="font-weight-bold"
               min-width="96"
               text
-              >{{ $store.state.auth.admin.name }}</v-tab
             >
+              {{ item.title }}
+            </v-tab>
             <v-tab
               :ripple="false"
               class="font-weight-bold"
@@ -35,8 +51,19 @@
               @click="logout"
               >Logout</v-tab
             >
+          </template>
+          <template v-else>
             <v-tab
-              v-for="(item, i) in other_items"
+              to="/admin"
+              :ripple="false"
+              class="white--text"
+              min-width="96"
+              text
+            >
+              <span class="grey darken-1"> K-Admin </span>
+            </v-tab>
+            <v-tab
+              v-for="(item, i) in loggedout_items"
               :key="i"
               :to="item.route"
               :ripple="false"
@@ -58,16 +85,17 @@ export default {
   name: 'AdminAppBar',
 
   data: () => ({
-    other_items: [
+    loggedin_items: [
       { title: 'Pending Restaurants', route: '/admin/pending-restaurants' },
       { title: 'Active Restaurants', route: '/admin/active-restaurants' },
     ],
+    loggedout_items: [{ title: 'Login', route: '/admin/login' }],
   }),
   methods: {
     logout() {
-      this.$router.push('/')
+      this.$router.push('/admin')
       this.$store.dispatch('auth/logout_admin')
-    }
+    },
   },
 }
 </script>

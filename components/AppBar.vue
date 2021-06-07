@@ -8,12 +8,14 @@
       height="80"
     >
       <v-tab v-if="$vuetify.breakpoint.mdAndUp" to="/" :ripple="false">
-        <v-img
-          :src="require('@/assets/logo.png')"
-          class="ml-12"
-          contain
-          max-width="140"
-        />
+        <router-link to="/">
+          <v-img
+            :src="require('@/assets/logo.png')"
+            class="ml-12"
+            contain
+            max-width="140"
+          />
+        </router-link>
       </v-tab>
       <v-spacer />
 
@@ -97,7 +99,7 @@ export default {
     logout() {
       this.$router.push('/')
       this.$store.dispatch('auth/logout_user')
-    }
+    },
   },
   computed: {
     cartItemsNum() {
