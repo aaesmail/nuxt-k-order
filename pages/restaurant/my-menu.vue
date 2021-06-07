@@ -44,14 +44,6 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
-                        <!-- <v-col cols="12" sm="6" md="4"> -->
-                        <!-- <v-text-field
-                          type="number"
-                          min="0"
-                          v-model="selectedItem.ingredients_count"
-                          label="Ingredients count"
-                          required
-                        ></v-text-field> -->
                         <v-col cols="12" sm="6" md="6">
                           <v-btn
                             class="ma-2"
@@ -106,10 +98,10 @@
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            type="number"
-                            min="0"
                             v-model="selectedItem.price"
                             label="Price"
+                            type="number"
+                            :rules="[required('price'), positiveNumber()]"
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
@@ -120,7 +112,6 @@
                         </v-col>
                       </v-row>
                     </v-container>
-                    <small>*indicates required field</small>
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -291,7 +282,7 @@
       </template>
     </v-data-iterator>
 
-    <!-- START Add/Edit menu item  -->
+    <!-- START delete menu item  -->
 
     <v-row justify="center">
       <v-dialog v-model="deleteDialog" persistent max-width="600px">
@@ -317,7 +308,7 @@
       </v-dialog>
     </v-row>
 
-    <!-- END Add/Edit menu item  -->
+    <!-- END delete menu item  -->
   </v-container>
 </template>
 
@@ -333,7 +324,7 @@ export default {
       valid: false,
       selectedItem: {
         ingredients: [],
-        ingredients_count: 1,
+        ingredients_count: 0,
         description: '',
         name: '',
         availableForSale: true,
@@ -376,17 +367,15 @@ export default {
       return this.keys.filter(key => key !== 'Name')
     },
   },
-  mounted() {
+  created() {
     this.initialize()
   },
   methods: {
     openDialog(item, edit_delete) {
-      const ing = item.ingredients.split(', ')
-      console.log(item)
-      console.log(this.selectedItem)
+      const ing = item.ingredients.split(', ').filter(el => el != '')
       this.selectedItem = {
         ingredients: ing,
-        ingredients_count: ing.length > 0 ? ing.length : 1,
+        ingredients_count: ing.length,
         description: item.description,
         name: item.name,
         availableForSale: item.available == '✅',
@@ -394,14 +383,13 @@ export default {
         price: item.price,
         title: item.name,
       }
-      console.log(this.selectedItem)
       this.editDialog = edit_delete === 'edit'
       this.deleteDialog = edit_delete === 'delete'
     },
     resetSelectedItem() {
       this.selectedItem = {
-        ingredients: [''],
-        ingredients_count: 1,
+        ingredients: [],
+        ingredients_count: 0,
         description: '',
         name: '',
         availableForSale: true,
@@ -448,9 +436,6 @@ export default {
       this.itemsPerPage = number
     },
     async initialize() {
-      // if (!this.$store.state.auth.restaurant)
-      //   await this.$store.dispatch('auth/fetch_restaurant')
-      // const id = this.$store.state.auth.restaurant.id
       try {
         this.items = (
           await restaurant.get_menu_items(

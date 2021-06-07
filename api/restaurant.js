@@ -17,4 +17,19 @@ export default {
     axios.delete(`restaurants/me/menu-items/${id}`, {
       headers: { Authorization: token },
     }),
+  get_incoming_orders: (token, delivered) =>
+    axios.get(
+      `restaurants/me/orders?page=1&limit=1000&delivered=${delivered}`,
+      {
+        headers: { Authorization: token },
+      }
+    ),
+  set_order_delivered: (token, id) =>
+    axios.patch(
+      `restaurants/me/orders/${id}/delivered-status`,
+      { delivered: true },
+      {
+        headers: { Authorization: token },
+      }
+    ),
 }

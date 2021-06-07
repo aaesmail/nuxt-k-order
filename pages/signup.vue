@@ -5,6 +5,7 @@
       :submitForm="signupUser"
       :hasName="true"
       :extraFields="extraFormFields"
+      :message="message"
     />
   </v-container>
 </template>
@@ -21,9 +22,15 @@ export default {
           this.$router.push('/')
         })
         .catch(error => {
+          console.log(error.response.data)
           this.loading = false
           if (error.response && error.response.data) {
-            // todo
+            if (error.response.data.error.code == 11000)
+              this.message = 'Already Registered'
+            else {
+              this.message = error.response.data.message.split(':')
+              this.message = this.message[this.message.length - 1]
+            }
           }
         })
     },
@@ -31,6 +38,7 @@ export default {
   data() {
     return {
       ...validations,
+      message: '',
     }
   },
   computed: {

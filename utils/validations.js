@@ -17,6 +17,10 @@ let emailFormat = () => {
   return v => (v && regex.test(v)) || 'Must be a valid email'
 }
 
+let positiveNumber = () => {
+  return v => (v && v >= 0) || 'Must be a valid price'
+}
+
 let phoneFormat = () => {
   let regex = /(01)[0-9]{9}/
   return v =>
@@ -30,5 +34,6 @@ export default {
   minLength,
   maxLength,
   emailFormat,
+  positiveNumber,
   phoneFormat,
 }

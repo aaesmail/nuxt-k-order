@@ -129,6 +129,8 @@ export default {
 
   created() {
     this.initialize(this)
+    const obj = this
+    setInterval(() => obj.initialize(obj), 1000 * 10 * 5)
   },
 
   methods: {

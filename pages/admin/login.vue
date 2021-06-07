@@ -1,12 +1,21 @@
 <template>
   <v-container>
     <h1>Login</h1>
-    <UserAuthForm buttonText="Login" :submitForm="loginAdmin" />
+    <UserAuthForm
+      buttonText="Login"
+      :submitForm="loginAdmin"
+      :message="message"
+    />
   </v-container>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      message: '',
+    }
+  },
   methods: {
     loginAdmin(loginInfo) {
       this.$store
@@ -20,7 +29,7 @@ export default {
         .catch(error => {
           this.loading = false
           if (error.response && error.response.data) {
-            // todo
+            this.message = error.response.data.message
           }
         })
     },

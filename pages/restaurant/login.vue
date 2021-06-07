@@ -1,12 +1,21 @@
 <template>
   <v-container>
     <h1>Login</h1>
-    <UserAuthForm buttonText="Login" :submitForm="loginRestaurant" />
+    <UserAuthForm
+      buttonText="Login"
+      :submitForm="loginRestaurant"
+      :message="message"
+    />
   </v-container>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      message: '',
+    }
+  },
   layout: 'restaurant',
   methods: {
     loginRestaurant(loginInfo) {
@@ -20,9 +29,8 @@ export default {
         })
         .catch(error => {
           this.loading = false
-          if (error.response && error.response.data) {
-            // todo
-          }
+          if (error.response && error.response.data)
+            this.message = error.response.data.message
         })
     },
   },

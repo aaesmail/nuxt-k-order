@@ -1,11 +1,20 @@
 <template>
   <v-container class="mt-12">
-    <UserAuthForm buttonText="Log in" :submitForm="loginUser" />
+    <UserAuthForm
+      buttonText="Log in"
+      :submitForm="loginUser"
+      :message="message"
+    />
   </v-container>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      message: '',
+    }
+  },
   methods: {
     loginUser(loginInfo) {
       this.$store
@@ -18,9 +27,8 @@ export default {
         })
         .catch(error => {
           this.loading = false
-          if (error.response && error.response.data) {
-            // todo
-          }
+          if (error.response && error.response.data)
+            this.message = error.response.data.message
         })
     },
   },

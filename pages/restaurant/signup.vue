@@ -33,11 +33,15 @@
                   />
                   <v-btn @click="removeBranch(i)">Remove</v-btn>
 
-                      <v-layout class="my-3">
-      <v-spacer />
-    <v-btn @click="signup()">Submit</v-btn>
-    </v-layout>
-
+                  <v-layout class="my-3">
+                    <v-spacer />
+                    <v-btn @click="signup()">Submit</v-btn>
+                  </v-layout>
+                  <v-card-title
+                    v-show="message != ''"
+                    class="indigo lighten-2"
+                    >{{ message }}</v-card-title
+                  >
                 </section>
               </v-card-text>
             </v-form>
@@ -54,6 +58,7 @@ export default {
   layout: 'restaurant',
   data() {
     return {
+      message: '',
       next: false,
       branches: [{}],
       restaurantInfo: null,
@@ -71,15 +76,22 @@ export default {
       this.branches.splice(i, 1)
     },
     signup() {
+      this.restaurantInfo.branches = this.branches
       this.$store
-        .dispatch('auth/signup_restaurant', signupinfo)
+        .dispatch('auth/signup_restaurant', this.restaurantInfo)
         .then(result => {
-          this.$router.push('/')
+          // this.$router.push('/')
+          this.message = error.response.data.message
         })
         .catch(error => {
           this.loading = false
           if (error.response && error.response.data) {
-            // todo
+            if (error.response.data.error.code == 11000)
+              this.message = 'Already Registered, please login.'
+            else {
+              this.message = error.response.data.message.split(':')
+              this.message = this.message[this.message.length - 1]
+            }
           }
         })
     },
