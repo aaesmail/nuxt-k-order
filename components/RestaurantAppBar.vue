@@ -19,13 +19,13 @@
 
       <div>
         <v-tabs optional background-color="transparent">
-          <template v-if="$store.state.auth.admin">
+          <template v-if="$store.state.auth.restaurant">
             <v-tab
               :ripple="false"
               class="font-weight-bold"
               min-width="96"
               text
-              >{{ $store.state.auth.admin.name }}</v-tab
+              >{{ $store.state.auth.restaurant.name }}</v-tab
             >
             <v-tab
               :ripple="false"
@@ -55,18 +55,18 @@
 
 <script>
 export default {
-  name: 'AdminAppBar',
+  name: 'RestaurantAppBar',
 
   data: () => ({
     other_items: [
-      { title: 'Pending Restaurants', route: '/admin/pending-restaurants' },
-      { title: 'Active Restaurants', route: '/admin/active-restaurants' },
+      { title: 'Orders', route: '/restaurant/my-orders' },
+      { title: 'Menu', route: '/restaurant/my-menu' },
     ],
   }),
   methods: {
     logout() {
       this.$router.push('/')
-      this.$store.dispatch('auth/logout_admin')
+      this.$store.dispatch('auth/logout_restaurant')
     }
   },
 }

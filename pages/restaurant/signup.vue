@@ -51,6 +51,7 @@
 <script>
 import axios from 'axios'
 export default {
+  layout: 'restaurant',
   data() {
     return {
       next: false,
@@ -70,10 +71,10 @@ export default {
       this.branches.splice(i, 1)
     },
     signup() {
-      this.restaurantInfo.branches = this.branches
-        axios.post('authentication/restaurant-signup', this.restaurantInfo )
+      this.$store
+        .dispatch('auth/signup_restaurant', signupinfo)
         .then(result => {
-          alert(result.data)
+          this.$router.push('/')
         })
         .catch(error => {
           this.loading = false

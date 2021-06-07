@@ -8,4 +8,5 @@ export default async function({ store, redirect }) {
   }
 
   store.dispatch('auth/fetch_admin')
+  store.dispatch('auth/fetch_restaurant')
 }

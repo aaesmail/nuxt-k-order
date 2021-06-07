@@ -4,6 +4,7 @@ import { setAuthToken, resetAuthToken } from '~/utils/auth'
 export const state = () => ({
   user: null,
   admin: null,
+  restaurant: null,
 })
 
 export const mutations = {
@@ -18,6 +19,12 @@ export const mutations = {
   },
   reset_admin(store) {
     store.admin = null
+  },
+  set_restaurant(store, data) {
+    store.restaurant = data
+  },
+  reset_restaurant(store) {
+    store.restaurant = null
   },
 }
 
@@ -74,6 +81,40 @@ export const actions = {
   logout_admin({ commit }) {
     localStorage.removeItem('admin-token')
     commit('reset_admin')
+    return Promise.resolve()
+  },
+
+  async fetch_restaurant({ commit }) {
+    try {
+      const restaurantToken = localStorage.getItem('restaurant-token')
+      if (!restaurantToken) throw 'not authenticated'
+      const response = await api.auth.restaurant_me(restaurantToken)
+      commit('set_restaurant', response.data.user)
+      return response
+    } catch (error) {
+      commit('reset_restaurant')
+      return error
+    }
+  },
+  async login_restaurant({ commit }, data) {
+    const response = await api.auth.restaurant_login(data)
+    commit('set_restaurant', response.data.user)
+    setAuthToken(response.data.token)
+    localStorage.setItem('restaurant-token', response.data.token)
+    return response
+  },
+  async signup_restaurant({ commit }, data) {
+    const response = await api.auth.restaurant_signup(data)
+    commit('set_restaurant', response.data.user)
+    setAuthToken(response.data.token)
+    localStorage.setItem('user-restaurant', response.data.token)
+    return response
+  },
+
+  logout_restaurant({ commit }) {
+    localStorage.removeItem('restaurant-token')
+    resetAuthToken()
+    commit('reset_restaurant')
     return Promise.resolve()
   },
 }

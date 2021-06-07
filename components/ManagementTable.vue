@@ -67,16 +67,11 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
-          <v-dialog
-            v-model="dialogInfo"
-            max-width="500px"
-            v-if="extra_info"
-          >
+          <v-dialog v-model="dialogInfo" max-width="500px" v-if="extra_info">
             <v-card>
               <v-card-title>
                 <span class="headline"
-                  >{{ currentRestaurant.name }}
-                  {{ extra_info.title }}</span
+                  >{{ currentRestaurant.name }} {{ extra_info.title }}</span
                 >
               </v-card-title>
 
@@ -107,7 +102,6 @@
 </template>
 
 <script>
-import admin from '~/api/admin'
 export default {
   layout: 'admin',
   props: {
@@ -141,7 +135,7 @@ export default {
     showInfo(item) {
       this.currentRestaurant = item
       this.dialogInfo = true
-      console.log("MAM")
+      console.log('MAM')
     },
 
     closeConfirm() {
