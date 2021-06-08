@@ -405,7 +405,7 @@ export default {
         await call(localStorage.getItem('restaurant-token'), this.selectedItem)
         this.initialize()
       } catch (error) {
-        alert('Error, please try again!')
+        console.log('Error, please try again!')
       }
       this.resetSelectedItem()
     },
@@ -418,7 +418,7 @@ export default {
         )
         this.initialize()
       } catch (error) {
-        alert('Error, please try again!')
+        console.log('Error, please try again!')
       }
       this.resetSelectedItem()
     },
@@ -445,7 +445,6 @@ export default {
         })
       } catch (error) {
         console.log(error)
-        // alert('Error in fetching data!')
       }
     },
   },

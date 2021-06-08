@@ -38,7 +38,9 @@ export default {
       admin
         .active_restaurants()
         .then(res => (current_obj.restaurants = res.data.restaurants))
-        .catch(err => alert('Failed getting restaurants, please try again!'))
+        .catch(err =>
+          console.log('Failed getting restaurants, please try again!')
+        )
     },
 
     confirm(current_obj) {
@@ -47,7 +49,7 @@ export default {
       admin
         .delete_restaurants(localStorage.getItem('admin-token'), list)
         .then(res => current_obj.initialize(current_obj))
-        .catch(err => alert('Failed, please try again!'))
+        .catch(err => console.log('Failed, please try again!'))
     },
   },
 }

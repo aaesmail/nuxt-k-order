@@ -40,7 +40,7 @@ export default {
         .pending_restaurants(localStorage.getItem('admin-token'))
         .then(res => (current_obj.restaurants = res.data.restaurants))
         .catch(err =>
-          alert('Failed getting pending restaurants, please try again!')
+          console.log('Failed getting pending restaurants, please try again!')
         )
     },
 
@@ -56,7 +56,7 @@ export default {
           list
         )
         .then(res => current_obj.initialize(current_obj))
-        .catch(err => alert('Failed, please try again!'))
+        .catch(err => console.log('Failed, please try again!'))
     },
   },
 }

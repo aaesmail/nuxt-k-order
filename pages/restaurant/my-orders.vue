@@ -305,7 +305,7 @@ export default {
           this.dialog = false
           this.initialize()
         })
-        .catch(err => alert('Error, please try again!', err))
+        .catch(err => console.log('Error, please try again!', err))
     },
 
     nextPage() {
