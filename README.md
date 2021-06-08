@@ -2,6 +2,8 @@
 
 ## A Single Page Application Using for Resturants to offer delivery and show their menu, and for customers to order food.
 
+## App hosted on heroku: https://korder.herokuapp.com/
+
 ## How To Run:
 
     * Have npm installed globally on your system
