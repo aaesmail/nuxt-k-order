@@ -11,7 +11,6 @@
     <div class="subtitle-1 font-weight-bold mb-5">
       <v-rating
         v-model="rating"
-        half-increments
         icon-label="custom icon label text {0} of {1}"
       ></v-rating>
     </div>
@@ -26,10 +25,11 @@
 import axios from 'axios'
 
 export default {
+  middleware: 'login_user_only',
   data() {
     return {
       details: '',
-      rating: 2.5,
+      rating: 3,
     }
   },
 

@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  middleware: 'login_user_only',
   data() {
     return {
       checkingOut: false,

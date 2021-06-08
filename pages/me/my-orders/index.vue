@@ -22,6 +22,7 @@
 import axios from 'axios'
 
 export default {
+  middleware: 'login_user_only',
   data() {
     return {
       page: 1,

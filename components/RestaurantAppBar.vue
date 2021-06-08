@@ -86,6 +86,7 @@ export default {
 
   data: () => ({
     loggedin_items: [
+      { title: 'Reviews', route: '/restaurant/reviews' },
       { title: 'My Orders', route: '/restaurant/my-orders' },
       { title: 'My Menu', route: '/restaurant/my-menu' },
     ],

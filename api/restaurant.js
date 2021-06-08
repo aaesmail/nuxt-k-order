@@ -32,4 +32,8 @@ export default {
         headers: { Authorization: token },
       }
     ),
+  get_reviews: token =>
+    axios.get(`restaurants/me/reviews?page=1&limit=1000`, {
+      headers: { Authorization: token },
+    }),
 }
