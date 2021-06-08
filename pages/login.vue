@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  middleware: 'not_login_user_only',
   data() {
     return {
       message: '',

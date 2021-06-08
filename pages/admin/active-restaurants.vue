@@ -12,6 +12,7 @@
 import admin from '~/api/admin'
 export default {
   layout: 'admin',
+  middleware: 'login_admin_only',
   data: () => ({
     headers: [
       {

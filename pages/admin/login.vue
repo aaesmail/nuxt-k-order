@@ -11,6 +11,7 @@
 <script>
 export default {
   layout: 'admin',
+  middleware: 'not_login_admin_only',
   data() {
     return {
       message: '',

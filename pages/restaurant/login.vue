@@ -10,12 +10,14 @@
 
 <script>
 export default {
+  layout: 'restaurant',
+  middleware: 'not_login_restaurant_only',
+
   data() {
     return {
       message: '',
     }
   },
-  layout: 'restaurant',
   methods: {
     loginRestaurant(loginInfo) {
       this.$store

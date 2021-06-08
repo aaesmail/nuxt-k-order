@@ -14,6 +14,8 @@
 import validations from '@/utils/validations'
 
 export default {
+  middleware: 'not_login_user_only',
+
   methods: {
     signupUser(signupinfo) {
       this.$store

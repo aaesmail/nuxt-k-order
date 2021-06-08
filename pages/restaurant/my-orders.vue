@@ -236,6 +236,7 @@ import validations from '@/utils/validations'
 
 export default {
   layout: 'restaurant',
+  middleware: 'login_restaurant_only',
   data() {
     return {
       ...validations,

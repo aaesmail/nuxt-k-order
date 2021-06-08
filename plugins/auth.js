@@ -1,12 +1,12 @@
 import { setAuthToken } from '~/utils/auth'
 
-export default async function({ store, redirect }) {
+export default async function({ store, route, redirect }) {
   const userToken = localStorage.getItem('user-token')
   if (userToken) {
     setAuthToken(userToken)
-    store.dispatch('auth/fetch_user')
+    await store.dispatch('auth/fetch_user')
   }
 
-  store.dispatch('auth/fetch_admin')
-  store.dispatch('auth/fetch_restaurant')
+  await store.dispatch('auth/fetch_admin')
+  await store.dispatch('auth/fetch_restaurant')
 }

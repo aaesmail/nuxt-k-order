@@ -1,13 +1,20 @@
 <template>
-  <management-table :headers="headers" :title="'Pending Restaurants'" :extra_info="extra_info" :selected_btn="{title: 'Confirm Selected', action: confirm}" :initialize="initialize" />
+  <management-table
+    :headers="headers"
+    :title="'Pending Restaurants'"
+    :extra_info="extra_info"
+    :selected_btn="{ title: 'Confirm Selected', action: confirm }"
+    :initialize="initialize"
+  />
 </template>
 
 <script>
-import admin from '~/api/admin';
+import admin from '~/api/admin'
 export default {
   layout: 'admin',
-  data: () => ({
+  middleware: 'login_admin_only',
 
+  data: () => ({
     headers: [
       {
         text: 'Name',
@@ -23,23 +30,33 @@ export default {
       headers: [
         { text: 'Address', align: 'start', value: 'address', sortable: false },
         { text: 'Phone', value: 'phone', sortable: false },
-      ]
-    }
+      ],
+    },
   }),
 
   methods: {
     initialize(current_obj) {
-      admin.pending_restaurants(localStorage.getItem('admin-token')).then(res =>
-          current_obj.restaurants = res.data.restaurants
-      ).catch(err => alert('Failed getting pending restaurants, please try again!'))
+      admin
+        .pending_restaurants(localStorage.getItem('admin-token'))
+        .then(res => (current_obj.restaurants = res.data.restaurants))
+        .catch(err =>
+          alert('Failed getting pending restaurants, please try again!')
+        )
     },
 
     confirm(current_obj) {
       current_obj.dialogConfirm = false
-      const list = current_obj.selected.map(r => ({id: r.id, confirm_status: true}))
-      admin.set_restaurants_confirm_status(localStorage.getItem('admin-token'), list).then(res =>
-          current_obj.initialize(current_obj)
-      ).catch(err => alert('Failed, please try again!'))
+      const list = current_obj.selected.map(r => ({
+        id: r.id,
+        confirm_status: true,
+      }))
+      admin
+        .set_restaurants_confirm_status(
+          localStorage.getItem('admin-token'),
+          list
+        )
+        .then(res => current_obj.initialize(current_obj))
+        .catch(err => alert('Failed, please try again!'))
     },
   },
 }
