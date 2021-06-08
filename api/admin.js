@@ -8,4 +8,9 @@ export default {
       headers: { Authorization: token },
     }),
   active_restaurants: () => axios.get('restaurants'),
+  delete_restaurants: (token, list) =>
+    axios.delete('restaurants', {
+      headers: { Authorization: token },
+      data: { ids: list },
+    }),
 }

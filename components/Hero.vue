@@ -29,6 +29,7 @@
             "
             class="d-flex flex-wrap"
           ></div>
+          <v-btn outlined to="/restaurant"> K-Restaurant </v-btn>
         </v-responsive>
       </v-container>
     </v-img>
